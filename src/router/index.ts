@@ -1,7 +1,4 @@
 // src/router/index.ts
-import AboutView from '@/views/AboutView.vue'
-import HomeView from '@/views/HomeView.vue'
-import UserView from '@/views/UserView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 // route components (you can lazy-load them, see below)

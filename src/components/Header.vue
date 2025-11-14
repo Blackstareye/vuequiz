@@ -3,6 +3,7 @@
     <h1 class="text-center text-2xl font-bold">
       {{ pageTitle }}
     </h1>
+    <router-link to="/quiz">Quiz</router-link>
   </header>
 </template>
 
