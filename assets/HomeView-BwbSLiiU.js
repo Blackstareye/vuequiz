@@ -1,1 +1,0 @@
-import{_ as n,c as l,o as t,a as e}from"./index-DL-3FoFH.js";const a={};function r(c,o){return t(),l("div",null,[...o[0]||(o[0]=[e("h1",null,"Home",-1),e("p",null,"Welcome to the home page.",-1),e("nav",null,null,-1)])])}const m=n(a,[["render",r]]);export{m as default};
