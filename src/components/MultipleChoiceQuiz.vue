@@ -1,68 +1,84 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import QuizElement from './QuizElement.vue'
 import QuizQuestion from './QuizQuestion.vue'
+import { fetcher } from '@/repo/api'
+import type { Question } from '@/types/api'
 
+// Props (currently empty)
 defineProps<{}>()
-const question = {
-  q: 'Hello this is a test?',
-  sug: [
-    'Hellokitty',
-    'nulla consectetur ad quasi quidem sapiente magnam aperiam, nostrum distinctio velit, reprehenderit qui dolore alias illo saepe in beatae voluptates eum eaque aut dignissimos, repudiandae corrupti tempore? Officiis, eos placeat, tempore, natus consectetur corporis numquam nam quibusdam est facilis omnis voluptatem!"',
-    'Ozelot',
-    'Dubidum',
-  ],
-  cor: 1,
-}
 
+// State
+const question = ref<Question | null>(null)
+const loading = ref(true)
+const error = ref<string | null>(null)
 const clickedIndex = ref<number | null>(null)
 
-function getButtonClass(index: number) {
-  if (clickedIndex.value === null) return ''
+// Computed: safeQuestion auto-unwrapped in template
+// const safeQuestion = computed(() => question.value)
 
-  return index === question.cor ? 'bg-green-400' : clickedIndex.value === index ? 'bg-red-400' : ''
+// Computed: button classes
+const buttonClasses = computed(() => {
+  if (!question.value || clickedIndex.value === null) return []
+  const correctIndex = question.value.obj.cor
+  return question.value.obj.sug.map((_, idx) => {
+    if (idx === correctIndex) return 'bg-green-400'
+    if (idx === clickedIndex.value) return 'bg-red-400'
+    return ''
+  })
+})
+
+// Fetch function
+async function fetchData() {
+  loading.value = true
+  error.value = null
+
+  try {
+    const response: Question = await fetcher('/questions')
+    question.value = response
+    console.log('Fetched question:', response)
+  } catch (err: any) {
+    console.error(err)
+    error.value = err.message
+  } finally {
+    loading.value = false
+  }
 }
 
-const buttonClasses = computed(() =>
-  question.sug.map((option, index) => {
-    if (clickedIndex.value === null) return ''
-    return question.cor === index
-      ? 'bg-green-400'
-      : clickedIndex.value === index
-        ? 'bg-red-400'
-        : ''
-  }),
-)
-
+// Click handler
 function isCorrectNumber(id: number) {
   clickedIndex.value = id
-  if (id === question.cor) {
+  if (question.value && id === question.value.obj.cor) {
     console.log('Correct!')
   }
 }
+
+// Fetch on mount
+onMounted(fetchData)
 </script>
 
 <template>
-  <QuizQuestion :question="question.q" />
-  <div class="grid lg:grid-cols-2 max-md:grid-cols:1 lg:gap-20 max-md:gap-10 text-center">
-    <!-- <template v-for="(value, index) in question['sug']">
-      <QuizElement :click-handler="isCorrectNumber" :id="index" :msg="value" />
-    </template> -->
-    <QuizElement
-      v-for="(option, index) in question.sug"
-      :key="index"
-      :id="index"
-      :msg="option"
-      :clickHandler="isCorrectNumber"
-      :buttonClass="buttonClasses[index]!"
-    />
+  <!-- Loading state -->
+  <div v-if="loading" class="text-center">Loading...</div>
+
+  <!-- Error state -->
+  <div v-else-if="error" class="text-red-500 text-center">{{ error }}</div>
+
+  <!-- Question display -->
+  <div v-if="question">
+    <QuizQuestion :question="question.q" />
+
+    <div class="grid lg:grid-cols-2 max-md:grid-cols-1 lg:gap-20 max-md:gap-10 text-center">
+      <QuizElement
+        v-for="(option, index) in question.obj.sug"
+        :key="index"
+        :id="index"
+        :msg="option"
+        :clickHandler="isCorrectNumber"
+        :buttonClass="buttonClasses[index]!"
+      />
+    </div>
   </div>
 </template>
 
-<!-- <QuizElement msg="HelloKitty" />
-      <QuizElement
-        msg="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit nulla consectetur ad quasi quidem sapiente magnam aperiam, nostrum distinctio velit, reprehenderit qui dolore alias illo saepe in beatae voluptates eum eaque aut dignissimos, repudiandae corrupti tempore? Officiis, eos placeat, tempore, natus consectetur corporis numquam nam quibusdam est facilis omnis voluptatem!"
-      />
-      <QuizElement msg="JH" />
-      <QuizElement msg="a" /> -->
 <style scoped></style>
