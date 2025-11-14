@@ -1,5 +1,5 @@
 // src/router/index.ts
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 
 // route components (you can lazy-load them, see below)
 
@@ -24,7 +24,7 @@ const routes = [
 ]
 
 const router = createRouter({
-    history: createWebHistory(), // or createWebHashHistory()
+    history: createWebHashHistory(), // or createWebHashHistory()
     routes,
 })
 router.beforeEach((to, from, next) => {

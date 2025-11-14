@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import MultipleChoiceQuiz from '@/components/MultipleChoiceQuiz.vue'
-import QuizElement from '@/components/QuizElement.vue'
-import QuizQuestion from '@/components/QuizQuestion.vue'
 </script>
 
 <template>
