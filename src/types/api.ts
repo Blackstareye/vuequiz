@@ -1,3 +1,4 @@
+import type { MediaType } from "./media";
 
 export interface DummyResponse {
     dummy: string;
@@ -9,13 +10,23 @@ export interface UserResponse {
     name: string;
 }
 
+
+
+export interface Question {
+    title?: string
+    media?: {
+        type: MediaType
+        path: string
+    }
+}
+
 export interface MultipleChoiceObject {
+    q: Question,
     sug: Array<string>,
     cor: number
 }
 
-export interface Question {
-    q: string,
+export interface QuestionObject {
     t: string,
     obj: MultipleChoiceObject
 }

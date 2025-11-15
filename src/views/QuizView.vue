@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import MultipleChoiceQuiz from '@/components/MultipleChoiceQuiz.vue'
+import Quiz from '@/components/Quiz.vue'
 </script>
 
 <template>
-  <div class="flex flex-col items-center lg:m-10 max-md:m-2 max-md:p-2 lg:p-10">
-    <MultipleChoiceQuiz />
+  <div class="flex flex-col items-center lg:m-auto p-5">
+    <Quiz />
   </div>
 </template>

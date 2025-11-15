@@ -1,16 +1,18 @@
 import { QuestionType } from "@/enums/QuestionType";
-import type { DummyResponse, UserResponse, Question } from "@/types/api";
+import type { DummyResponse, UserResponse, QuestionObject } from "@/types/api";
 import sample from "@/util/ArrayUtils";
 import { spongebobQuestionsDE } from "./data";
 //  First step is a simple fetch
 
 const DELAY: number = 1000
 
-var questions: Array<Question> = [
+var questions: Array<QuestionObject> = [
     {
-        q: 'Hello this is a test?',
         t: QuestionType.MULTIPLE_CHOICE,
         obj: {
+            q: {
+                title: 'Hello this is a test?'
+            },
             sug: [
                 'Hellokitty',
                 'nulla consectetur ad quasi quidem sapiente magnam aperiam, nostrum distinctio velit, reprehenderit qui dolore alias illo saepe in beatae voluptates eum eaque aut dignissimos, repudiandae corrupti tempore? Officiis, eos placeat, tempore, natus consectetur corporis numquam nam quibusdam est facilis omnis voluptatem!"',

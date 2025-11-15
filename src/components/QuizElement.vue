@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<Props>(), {})
 <template>
   <button
     @click="() => clickHandler(props.id)"
-    :class="['hover:bg-amber-500 bg-amber-100 p-10 rounded-2xl lg:h-[20vh]', props.buttonClass]"
+    :class="['hover:bg-amber-500 bg-amber-100 p-5 rounded-2xl lg:max-h-[10vh]', props.buttonClass]"
   >
     {{ props.msg }}
   </button>
