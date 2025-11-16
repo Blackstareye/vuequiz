@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { fetcher } from '@/repo/api'
-import type { QuestionObject } from '@/types/api'
+import type { MultipleChoiceObject, QuestionObject, WritingObject } from '@/types/api'
 import { onMounted, ref } from 'vue'
 import MultipleChoiceQuiz from './MultipleChoiceQuiz.vue'
 import { QuestionType } from '@/enums/QuestionType'
 import QuizQuestion from './QuizQuestion.vue'
+import WritingQuiz from './WritingQuiz.vue'
 
 defineProps<{}>()
 
@@ -33,7 +34,10 @@ async function fetchData() {
 onMounted(fetchData)
 
 function multipleChoiceScore(isCorrect: boolean) {
-  console.log(`Player  ${isCorrect ? 'wins' : 'loose'}`)
+  console.log(`Choice: Player  ${isCorrect ? 'wins' : 'loose'}`)
+}
+function writingScore(isCorrect: boolean) {
+  console.log(`Writing: Player  ${isCorrect ? 'wins' : 'loose'}`)
 }
 </script>
 
@@ -46,13 +50,23 @@ function multipleChoiceScore(isCorrect: boolean) {
 
   <!-- if type MultipleChoice - put all in that -->
   <!-- A MultipleChoiceQuiz contains a question and a choice -->
+  <!-- :auto-write="false" -->
+  <WritingQuiz
+    v-if="question && QuestionType.WRITING === question.t"
+    :auto-write="true"
+    :cor="(question.obj as WritingObject).answ"
+    :is-correct-handler="writingScore"
+  >
+    <QuizQuestion :q="(question.obj as WritingObject).q"></QuizQuestion>
+  </WritingQuiz>
+
   <MultipleChoiceQuiz
     v-if="question && QuestionType.MULTIPLE_CHOICE === question.t"
     :is-correct-handler="multipleChoiceScore"
-    :sug="question.obj.sug"
-    :cor="question.obj.cor"
+    :sug="(question.obj as MultipleChoiceObject).sug"
+    :cor="(question.obj as MultipleChoiceObject).cor"
   >
-    <QuizQuestion :q="question.obj.q"></QuizQuestion>
+    <QuizQuestion :q="(question.obj as MultipleChoiceObject).q"></QuizQuestion>
   </MultipleChoiceQuiz>
 </template>
 

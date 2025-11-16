@@ -1,7 +1,7 @@
 import { QuestionType } from "@/enums/QuestionType";
 import type { DummyResponse, UserResponse, QuestionObject } from "@/types/api";
 import sample from "@/util/ArrayUtils";
-import { spongebobQuestionsDE } from "./data";
+import { spongebobQuestionsDE, spongeBobWriting } from "./data";
 //  First step is a simple fetch
 
 const DELAY: number = 1000
@@ -22,7 +22,8 @@ var questions: Array<QuestionObject> = [
             cor: 1,
         }
     },
-    ...spongebobQuestionsDE
+    ...spongebobQuestionsDE,
+    ...spongeBobWriting
 ];
 
 // 1️⃣ Map your mock routes with full types

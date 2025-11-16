@@ -26,7 +26,12 @@ export interface MultipleChoiceObject {
     cor: number
 }
 
+export interface WritingObject {
+    q: Question,
+    answ: string
+}
+
 export interface QuestionObject {
     t: string,
-    obj: MultipleChoiceObject
+    obj: MultipleChoiceObject | WritingObject
 }

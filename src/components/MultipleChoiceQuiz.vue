@@ -3,9 +3,8 @@ import { ref, computed, onMounted } from 'vue'
 import QuizElement from './QuizElement.vue'
 import QuizQuestion from './QuizQuestion.vue'
 import { fetcher } from '@/repo/api'
+import { FAIL_CLASS, SUCCESS_CLASS } from '@/constants/Validation'
 
-const SUCCESS_CLASS = 'bg-green-400'
-const FAIL_CLASS = 'bg-red-400'
 // Props (currently empty)
 const props = defineProps<{
   sug: Array<string>

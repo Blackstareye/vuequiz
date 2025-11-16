@@ -102,3 +102,15 @@ export const spongebobQuestionsDE: Array<QuestionObject> = [
         },
     },
 ];
+
+
+export const spongeBobWriting: Array<QuestionObject> = [
+    {
+        t: QuestionType.WRITING,
+        obj: {
+            q: { title: "Wie viele Löcher hat Spongebob" },
+            answ: "3",
+        },
+    },
+]
+
